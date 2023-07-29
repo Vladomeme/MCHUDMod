@@ -39,14 +39,14 @@ public class HudMod implements ClientModInitializer {
 	public static ModSpriteAtlasHolder HUD_ATLAS;
 
 	// Completely customized elements
-	public static BreathBar breathBar = new BreathBar();
-	public static HealthBar healthBar = new HealthBar();
-	public static HungerBar hungerBar = new HungerBar();
-	public static MountHealthBar mountHealthBar = new MountHealthBar();
+	public static final BreathBar breathBar = new BreathBar();
+	public static final HealthBar healthBar = new HealthBar();
+	public static final HungerBar hungerBar = new HungerBar();
+	public static final MountHealthBar mountHealthBar = new MountHealthBar();
 
 	// Movable vanilla elements
-	public static HeldItemTooltip heldItemTooltip = new HeldItemTooltip();
-	public static OverlayMessage overlayMessage = new OverlayMessage();
+	public static final HeldItemTooltip heldItemTooltip = new HeldItemTooltip();
+	public static final OverlayMessage overlayMessage = new OverlayMessage();
 
 	@Override
 	public void onInitializeClient() {

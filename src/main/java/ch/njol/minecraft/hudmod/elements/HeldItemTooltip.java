@@ -4,7 +4,7 @@ import ch.njol.minecraft.hudmod.HudMod;
 import ch.njol.minecraft.hudmod.mixins.InGameHudAccessor;
 import ch.njol.minecraft.uiframework.ElementPosition;
 import ch.njol.minecraft.uiframework.hud.HudElement;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.MutableText;
@@ -23,7 +23,7 @@ public class HeldItemTooltip extends HudElement {
 	@Override
 	protected boolean isEnabled() {
 		return HudMod.options.hud_enabled && HudMod.options.hud_moveHeldItemTooltip
-			       && client.options.heldItemTooltips && this.client.interactionManager.getCurrentGameMode() != GameMode.SPECTATOR; // these two are vanilla check
+			      && this.client.interactionManager.getCurrentGameMode() != GameMode.SPECTATOR; // these two are vanilla check
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class HeldItemTooltip extends HudElement {
 	}
 
 	@Override
-	protected void render(MatrixStack matrices, float tickDelta) {
+	protected void render(DrawContext context, float tickDelta) {
 		// nothing to do - rendered by (modified) vanilla code
 	}
 
