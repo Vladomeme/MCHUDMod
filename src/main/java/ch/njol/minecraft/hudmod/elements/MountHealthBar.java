@@ -9,6 +9,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import java.text.DecimalFormat;
 
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -76,7 +77,7 @@ public class MountHealthBar extends HudElement {
 	private float easedHealth = -1;
 
 	@Override
-	protected void render(DrawContext context, float tickDelta) {
+	protected void render(DrawContext context, RenderTickCounter tickCounter) {
 
 		LivingEntity mount = getMount();
 		if (mount == null && !isInEditMode()) {
@@ -98,7 +99,7 @@ public class MountHealthBar extends HudElement {
 
 		float maxHealth = Math.max(1.0f, mount != null ? mount.getMaxHealth() : 20);
 		float health = Utils.clamp(0, mount != null ? mount.getHealth() : 20, maxHealth);
-		float lastFrameDuration = client.getLastFrameDuration() / 20;
+		float lastFrameDuration = tickCounter.getLastFrameDuration() / 20;
 		easedHealth = Utils.clamp(0, easedHealth <= 0 ? health : Utils.ease(health, easedHealth, 6 * lastFrameDuration, maxHealth / 3 * lastFrameDuration), maxHealth);
 
 		drawPartialSprite(context, HudMod.HUD_ATLAS.getSprite(HEALTH_BAR),

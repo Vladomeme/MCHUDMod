@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.NavigableMap;
 
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -76,7 +77,7 @@ public class BreathBar extends HudElement {
 	private float easedAir = -1;
 
 	@Override
-	protected void render(DrawContext context, float tickDelta) {
+	protected void render(DrawContext context, RenderTickCounter tickCounter) {
 
 		PlayerEntity player = getCameraPlayer();
 		if (player == null) {
@@ -96,7 +97,7 @@ public class BreathBar extends HudElement {
 		drawSprite(context, HudMod.HUD_ATLAS.getSprite(BACKGROUND), 0, 0, width, HEIGHT);
 
 		int air = Utils.clamp(0, player.getAir(), player.getMaxAir());
-		float lastFrameDuration = client.getLastFrameDuration() / 20;
+		float lastFrameDuration = tickCounter.getLastFrameDuration() / 20;
 		easedAir = Utils.clamp(0, easedAir < 0 ? air : Utils.ease(air, easedAir, 6 * lastFrameDuration, 6 * lastFrameDuration), player.getMaxAir());
 
 		boolean hasWaterBreathing = player.hasStatusEffect(StatusEffects.WATER_BREATHING);

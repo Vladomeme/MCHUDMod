@@ -5,6 +5,7 @@ import ch.njol.minecraft.hudmod.mixins.InGameHudAccessor;
 import ch.njol.minecraft.uiframework.ElementPosition;
 import ch.njol.minecraft.uiframework.hud.HudElement;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.text.Text;
 
 public class OverlayMessage extends HudElement {
@@ -47,7 +48,7 @@ public class OverlayMessage extends HudElement {
 	}
 
 	@Override
-	protected void render(DrawContext context, float tickDelta) {
+	protected void render(DrawContext context, RenderTickCounter tickCounter) {
 		// nothing to do - rendered by (modified) vanilla code
 	}
 

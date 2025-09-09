@@ -5,6 +5,8 @@ import ch.njol.minecraft.hudmod.mixins.InGameHudAccessor;
 import ch.njol.minecraft.uiframework.ElementPosition;
 import ch.njol.minecraft.uiframework.hud.HudElement;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -36,8 +38,8 @@ public class HeldItemTooltip extends HudElement {
 		if (currentStack == null || currentStack.isEmpty()) {
 			return 0;
 		}
-		MutableText mutableText = Text.literal("").append(currentStack.getName()).formatted(currentStack.getRarity().formatting);
-		if (currentStack.hasCustomName()) {
+		MutableText mutableText = Text.literal("").append(currentStack.getName()).formatted(currentStack.getRarity().getFormatting());
+		if (currentStack.getComponents().contains(DataComponentTypes.CUSTOM_NAME)) {
 			mutableText.formatted(Formatting.ITALIC);
 		}
 		return client.textRenderer.getWidth(mutableText);
@@ -59,7 +61,7 @@ public class HeldItemTooltip extends HudElement {
 	}
 
 	@Override
-	protected void render(DrawContext context, float tickDelta) {
+	protected void render(DrawContext context, RenderTickCounter tickCounter) {
 		// nothing to do - rendered by (modified) vanilla code
 	}
 

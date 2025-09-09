@@ -7,8 +7,8 @@ plugins {
 //    id 'com.github.johnrengelman.shadow' version '1.2.2'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 archivesBaseName = project.archives_base_name + "-mc" + project.minecraft_version
 version = project.mod_version
@@ -28,12 +28,8 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
     modImplementation("eu.pb4:placeholder-api:2.4.0-pre.1+1.20.4")
-    modImplementation files("./.gradle/Njols-config-framework-mc1_20_4-1.1.2.jar")
-    modImplementation files("./.gradle/Njols-UI-framework-mc1_20_4-1.1.1.jar")
-//    modApi "ch.njol.minecraft:ui-framework-mc1_20_4:${project.ui_framework_version}"
-//    include "ch.njol.minecraft:ui-framework-mc1_20_4:${project.ui_framework_version}"
-//    modApi "ch.njol.minecraft:config-framework-mc1_20_4:${project.config_framework_version}"
-//    include "ch.njol.minecraft:config-framework-mc1_20_4:${project.config_framework_version}"
+    modImplementation files("./.gradle/Njols-config-framework-mc1_21_1-1.1.2.jar")
+    modImplementation files("./.gradle/Njols-UI-framework-mc1_21_1-1.1.1.jar")
 }
 repositories {
     mavenLocal()
@@ -46,8 +42,8 @@ repositories {
     }
 }
 remapJar {
-    nestedJars.from(file("./.gradle/Njols-UI-framework-mc1_20_4-1.1.1.jar"))
-    nestedJars.from(file("./.gradle/Njols-config-framework-mc1_20_4-1.1.2.jar"))
+    nestedJars.from(file("./.gradle/Njols-UI-framework-mc1_21_1-1.1.1.jar"))
+    nestedJars.from(file("./.gradle/Njols-config-framework-mc1_21_1-1.1.2.jar"))
 }
 
 processResources {

@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
@@ -28,12 +29,12 @@ public class InGameHudMixin {
 	private MinecraftClient client;
 
 	@Unique
-	private float tickDelta;
+	private RenderTickCounter tickCounter;
 
 	@Inject(method = "render",
 		at = @At(value = "HEAD"))
-	void render_head(DrawContext context, float tickDelta, CallbackInfo ci) {
-		this.tickDelta = tickDelta;
+	void render_head(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
+		this.tickCounter = tickCounter;
 	}
 
 	// TODO XP bar? at least to be able to move it around?
@@ -53,9 +54,9 @@ public class InGameHudMixin {
 	void renderStatusBars(DrawContext context, CallbackInfo ci) {
 		if (HudMod.options.hud_enabled
 			    && HudMod.options.hud_statusBarsEnabled) {
-			HudMod.healthBar.renderAbsolute(context, tickDelta);
-			HudMod.hungerBar.renderAbsolute(context, tickDelta);
-			HudMod.breathBar.renderAbsolute(context, tickDelta);
+			HudMod.healthBar.renderAbsolute(context, tickCounter);
+			HudMod.hungerBar.renderAbsolute(context, tickCounter);
+			HudMod.breathBar.renderAbsolute(context, tickCounter);
 			// armor is useless in Monumenta, so no HUD element for that // TODO make one anyway? even in vanilla it doesn't really matter though
 			ci.cancel();
 		}
@@ -66,7 +67,7 @@ public class InGameHudMixin {
 	void renderMountHealth(DrawContext context, CallbackInfo ci) {
 		if (HudMod.options.hud_enabled
 			    && HudMod.options.hud_mountHealthEnabled) {
-			HudMod.mountHealthBar.renderAbsolute(context, tickDelta);
+			HudMod.mountHealthBar.renderAbsolute(context, tickCounter);
 			ci.cancel();
 		}
 	}
@@ -97,7 +98,7 @@ public class InGameHudMixin {
 		}
 	}
 
-	@Redirect(method = "render",
+	@Redirect(method = "renderOverlayMessage",
 		at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"),
 		slice = @Slice(from = @At(value = "FIELD", target = "Lnet/minecraft/client/gui/hud/InGameHud;overlayMessage:Lnet/minecraft/text/Text;", ordinal = 0),
 			to = @At(value = "FIELD", target = "Lnet/minecraft/client/gui/hud/InGameHud;overlayMessage:Lnet/minecraft/text/Text;", ordinal = 1)))

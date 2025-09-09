@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.NavigableMap;
 
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -80,7 +81,7 @@ public class HungerBar extends HudElement {
 
 
 	@Override
-	protected void render(DrawContext context, float tickDelta) {
+	protected void render(DrawContext context, RenderTickCounter tickCounter) {
 
 		PlayerEntity player = getCameraPlayer();
 		if (player == null) {
@@ -101,7 +102,7 @@ public class HungerBar extends HudElement {
 
 		int hunger = Utils.clamp(0, player.getHungerManager().getFoodLevel(), 20);
 		float saturation = Utils.clamp(0, player.getHungerManager().getSaturationLevel(), 20);
-		float lastFrameDuration = client.getLastFrameDuration() / 20;
+		float lastFrameDuration = tickCounter.getLastFrameDuration() / 20;
 		easedHunger = Utils.clamp(0, easedHunger < 0 ? hunger : Utils.ease(hunger, easedHunger, 6 * lastFrameDuration, 6 * lastFrameDuration), 20);
 		easedSaturation = Utils.clamp(0, easedSaturation < 0 ? saturation : Utils.ease(saturation, easedSaturation, 6 * lastFrameDuration, 6 * lastFrameDuration), 20);
 

@@ -10,6 +10,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import java.text.DecimalFormat;
 
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -103,7 +104,7 @@ public class HealthBar extends HudElement {
 	private float regenProgress = 0;
 
 	@Override
-	protected void render(DrawContext context, float tickDelta) {
+	protected void render(DrawContext context, RenderTickCounter tickCounter) {
 
 		PlayerEntity player = getCameraPlayer();
 		if (player == null) {
@@ -126,7 +127,7 @@ public class HealthBar extends HudElement {
 		float health = Utils.clamp(0, player.getHealth(), maxHealth);
 		float absorption = Math.max(0, player.getAbsorptionAmount());
 
-		float lastFrameDuration = client.getLastFrameDuration() / 20;
+		float lastFrameDuration = tickCounter.getLastFrameDuration() / 20;
 		easedHealth = Utils.clamp(0, easedHealth <= 0 ? health : Utils.ease(health, easedHealth, 6 * lastFrameDuration, maxHealth / 3 * lastFrameDuration), maxHealth);
 		easedAbsorption = Math.max(0, easedAbsorption < 0 ? absorption : Utils.ease(absorption, easedAbsorption, 6 * lastFrameDuration, maxHealth / 3 * lastFrameDuration));
 
